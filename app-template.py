@@ -31,13 +31,58 @@ ONLY PLACEHOLDER TAGS THAT ARE ALLOWED ARE: [fullName], [firstName], [lastName],
 
 From above you can see the tags that are allowed, but user will select only some of them and those MUST BE INCLUDED in the message AND NOTHING ELSE.
 
-IMPORTANT: ALL TAGS ARE RELATED TO THE CANDIDATE, NOT TO THE RECRUITER (SENDER OF THE MESSAGE). ALL TAGS ARE RELATED TO RECEIVER OF THE MESSAGE, NOT TO SENDER!!!!!!! EXAMPLE, LOCATION IS NOT THE RECRUITER LOCATION, BUT THE CANDIDATE LOCATION. ETC.
+CRITICAL INSTRUCTIONS FOR MESSAGE GENERATION:
 
-IMPORTANT IMPORTANT!!!: If the user do not provide firstName, or lastName, or fullName, you start the message with Hi, or Hello, or Dear, NOT with Hello [jobTitle] or similar nonsenses. Template must be very clean and clear and not to contain any nonsenses. Example: Hello [jobTitle], THAT IS NONSENSE!!! Hello [company], THAT IS NONSENSE!!! etc. IT IS IMPORTANT THAT YOU FOLLOW THIS INSTRUCTION. THIS IS ALSO NONSENSE Dear [company] Candidate, ONLY USE FIRST NAME OR LAST NAME OR FULL NAME IN STARTING THE MESSAGE. IF THEY ARE NOT PROVIDED AS TAGS, THEN YOU CANNOT USE THEM IN THE MESSAGE, AND START IT ONLY WITH Hi, Hello, Dear, etc. THIS IS ALSO NONSENSE Hello [location] professional. FOLLOW THIS INSTRUCTION!!! DO NOT BREAK IT. IN GREETING ONLY FIRST NAME OR LAST NAME OR FULL NAME COULD BE INCLUDED AND ONLY IF USER PROVIDES THAT TAGS!!!
+1. MANDATORY TAG USAGE:
+   - You MUST use ALL tags selected by the user. This is non-negotiable.
+   - Available tags: [fullName], [firstName], [lastName], [location], [jobTitle], [company], [emails]
+   - If a tag is selected, it MUST appear in the message.
 
-IMPORTANT: TAGS ARE RELATED TO THE CANDIDATE, NOT TO THE RECRUITER (SENDER OF THE MESSAGE). ALL TAGS ARE RELATED TO RECEIVER OF THE MESSAGE, NOT TO SENDER!!!!!!! EXAMPLE, LOCATION IS NOT THE RECRUITER LOCATION, BUT THE CANDIDATE LOCATION. ETC. YOU CANNOT SAY AT [COMPANY] WE VALUE ETC AS IT IS NOT YOUR COMPANY!!! THAT IS FOR ALL TAGS!!!
+2. TAG CONTEXT:
+   - ALL tags refer to the CANDIDATE, NOT the recruiter/sender.
+   - [company] is the candidate's current company, NOT the recruiter's company.
+   - [emails] are the candidate's email addresses, NOT the recruiter's.
 
-YOU CANNOT GENERATE MESSAGE WITHOUT TAGS THAT USER SELECTED. THEY MUST EXIST IN THE MESSAGE. Double check that you use all tags that user selected.
+3. GREETING RULES:
+   - Start with "Hi", "Hello", or "Dear".
+   - Use [firstName], [lastName], or [fullName] in greeting IF provided.
+   - NEVER use [jobTitle], [company], or [location] in the greeting.
+   - If no name tags are provided, use only "Hi", "Hello", or "Dear".
+
+4. CANDIDATE-CENTRIC LANGUAGE:
+   - ALL information in the message relates to the CANDIDATE.
+   - NEVER use phrases like "At [company], we value..." or "Join our team at [company]".
+   - AVOID any reference to the recruiter's company or location.
+
+5. PROHIBITED CONSTRUCTIONS:
+   - "Hello [jobTitle]" (INVALID)
+   - "Dear [company] Candidate" (INVALID)
+   - "Hello [location] professional" (INVALID)
+   - Any sentence starting with a tag other than [firstName], [lastName], or [fullName]
+
+6. CORRECT TAG USAGE EXAMPLES:
+   - CORRECT: "I noticed you work at [company] as a [jobTitle]."
+   - INCORRECT: "Join our team at [company]." ([company] is candidate's company, not recruiter's)
+   - CORRECT: "Your experience in [location] is impressive."
+   - INCORRECT: "I'll reach out to you at [emails]." ([emails] are candidate's, not recruiter's)
+   
+7. IMPORTANT TAG MEANING:
+   - [fullName] is the full name of the candidate
+   - [firstName] is the first name of the candidate
+   - [lastName] is the last name of the candidate
+   - [location] is the location of the candidate
+   - [jobTitle] is the job title of the candidate
+   - [company] is the company of the candidate
+   - [emails] are the emails of the candidate
+   
+8. GENERAL INSTRUCTIONS:
+    - If the user selects [fullName], [firstName], or [lastName], you MUST use all of them in the message. IN THIS CASE, YOU MUST FIND THE WAY AND USE ALL OF THEM IN THE MESSAGE. THIS IS MANDATORY. Only if they are provided of course.
+    - Message cannot be shorter than 450 characters.
+    - Try to use all data about writer/recruiter that is provided above: name, company, etc.
+    
+    
+FAILURE TO FOLLOW THESE RULES WILL RESULT IN AN INVALID OUTPUT.
+DOUBLE-CHECK YOUR MESSAGE BEFORE FINALIZING TO ENSURE ALL RULES ARE FOLLOWED.
 """
 
 refinement_prompt = """
@@ -49,18 +94,11 @@ Please refine the message to make it more {REFINEMENT} - {REFINEMENT_DESC}.
 The output MUST be only the message that the HR manager will send to the candidate. 
 NO SUBJECT OR ANY OTHER TEXT SHOULD BE INCLUDED.
 
-AS I SAID NO PLACEHOLDERS: NO STUFF LIKE THIS EITHER [LinkedIn Profile: https://me.linkedin.com/in/ognjen]
-ONLY PLACEHOLDER TAGS THAT ARE ALLOWED ARE: [fullName], [firstName], [lastName], [location], [jobTitle], [company], [emails]
+Use only tags that are in the original message template that user selected.
 
-IMPORTANT: ALL TAGS ARE RELATED TO THE CANDIDATE, NOT TO THE RECRUITER (SENDER OF THE MESSAGE). ALL TAGS ARE RELATED TO RECEIVER OF THE MESSAGE, NOT TO SENDER!!!!!!! EXAMPLE, LOCATION IS NOT THE RECRUITER LOCATION, BUT THE CANDIDATE LOCATION. ETC.
+IMPORTANT INSTRUCTIONS FOR MESSAGE GENERATION:
 
-IMPORTANT IMPORTANT!!!: If the user do not provide firstName, or lastName, or fullName, you start the message with Hi, or Hello, or Dear, NOT with Hello [jobTitle] or similar nonsenses. Template must be very clean and clear and not to contain any nonsenses. Example: Hello [jobTitle], THAT IS NONSENSE!!! Hello [company], THAT IS NONSENSE!!! etc. IT IS IMPORTANT THAT YOU FOLLOW THIS INSTRUCTION. THIS IS ALSO NONSENSE Dear [company] Candidate, ONLY USE FIRST NAME OR LAST NAME OR FULL NAME IN STARTING THE MESSAGE. IF THEY ARE NOT PROVIDED AS TAGS, THEN YOU CANNOT USE THEM IN THE MESSAGE, AND START IT ONLY WITH Hi, Hello, Dear, etc. THIS IS ALSO NONSENSE Hello [location] professional. FOLLOW THIS INSTRUCTION!!! DO NOT BREAK IT. IN GREETING ONLY FIRST NAME OR LAST NAME OR FULL NAME COULD BE INCLUDED AND ONLY IF USER PROVIDES THAT TAGS!!!
-
-You can only use the tags that are provided in the original message template that user selected.
-
-IMPORTANT: TAGS ARE RELATED TO THE CANDIDATE, NOT TO THE RECRUITER (SENDER OF THE MESSAGE). ALL TAGS ARE RELATED TO RECEIVER OF THE MESSAGE, NOT TO SENDER!!!!!!! EXAMPLE, LOCATION IS NOT THE RECRUITER LOCATION, BUT THE CANDIDATE LOCATION. ETC. YOU CANNOT SAY AT [COMPANY] WE VALUE ETC AS IT IS NOT YOUR COMPANY!!! THAT IS FOR ALL TAGS!!!
-
-YOU CANNOT GENERATE MESSAGE WITHOUT TAGS THAT USER SELECTED. THEY MUST EXIST IN THE MESSAGE. Double check that you use all tags that user selected.
+The only tags that are allowed in the message are the ones that user selected in the original message template.
 
 """ 
 
